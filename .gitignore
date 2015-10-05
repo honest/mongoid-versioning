@@ -9,6 +9,7 @@ Gemfile.lock
 *.rbc
 .bundle
 .config
+.idea
 coverage
 InstalledFiles
 lib/bundler/man
