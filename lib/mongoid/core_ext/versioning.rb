@@ -45,7 +45,7 @@ module Mongoid
           if deleted.respond_to?(:paranoid?) && deleted.paranoid?
             versions.delete_one(deleted)
             collection.find(atomic_selector).
-              update({ "$pull" => { "versions" => { "version" => deleted.version }}})
+              update_one({ "$pull" => { "versions" => { "version" => deleted.version }}})
           else
             versions.delete(deleted)
           end
@@ -131,7 +131,7 @@ module Mongoid
     def previous_revision
       _loading_revision do
         self.class.unscoped.
-          with(self.mongo_session.options).
+          with(self.mongo_client.options).
           where(_id: id).
           any_of({ version: version }, { version: nil }).first
       end
