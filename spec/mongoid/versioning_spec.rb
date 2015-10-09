@@ -193,6 +193,10 @@ describe Mongoid::Versioning do
 
       let(:title) { "my new wiki" }
 
+      before do
+        WikiPage.with(database: "mongoid_test_alt").mongo_client.collections.each(&:drop) # mongoid_test_alt table was retaining all the previously added wiki pages, so had to wipe them out in order to make test on line 239 pass
+      end
+
       let!(:page) do
         WikiPage.with(database: "mongoid_test_alt").create!(description: "1",title: title)
       end
